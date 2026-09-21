@@ -2,40 +2,521 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para ti ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flores Amarillas Para Ti ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Montserrat:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body, html {
-            height: 100%;
             width: 100%;
+            height: 100%;
+            background-color: #0d0d0d;
+            font-family: 'Montserrat', sans-serif;
+            color: #fff;
             overflow: hidden;
-            background-color: #000;
+        }
+
+        .app-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            max-width: 500px;
+            margin: 0 auto;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .app-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .reproductor-fijo {
+            position: fixed;
+            bottom: 25px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+            cursor: pointer;
+            font-size: 1.4rem;
         }
 
-        /* Pantalla de inicio para permitir el reproductor automático */
-        #pantalla-inicio {
+        .marco-polaroid {
+            background: #ffffff;
+            padding: 8px 8px 6px 8px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+            border-radius: 3px;
+            cursor: pointer;
+            width: 190px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+
+        .marco-polaroid:active {
+            transform: scale(0.98);
+        }
+
+        .marco-polaroid img, .marco-polaroid video {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            border-radius: 2px;
+        }
+
+        .fecha-polaroid {
+            color: #111111;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 8px;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        /* SECCIÓN 1: PORTADA ATARDECER */
+        .seccion-portada {
+            min-height: 100vh;
+            background-image: url('fondo.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 30px 20px 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .encabezado-portada {
+            margin-top: 15px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .titulo-portada {
+            font-size: 2rem;
+            color: #ffe600;
+            margin-bottom: 6px;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.9);
+        }
+
+        .subtitulo-portada {
+            font-size: 1rem;
+            color: #ffffff;
+            font-weight: 300;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+        }
+
+        .escena-flor {
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin-bottom: 0;
+        }
+
+        /* FLOR EN SU SITIO CON ANIMACIÓN DE MOVIMIENTO */
+        .flor-principal {
+            width: 210px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6));
+            position: relative;
+            z-index: 1;
+            /* Eleva la flor para que su base salga del orificio de la maceta */
+            transform: translateY(-160px);
+            transform-origin: bottom center;
+            animation: balanceoFlor 3.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes balanceoFlor {
+            0% {
+                transform: translateY(-160px) rotate(-3deg);
+            }
+            100% {
+                transform: translateY(-160px) rotate(3deg);
+            }
+        }
+
+        .abeja-volando {
+            position: absolute;
+            width: 55px;
+            top: 25%;
+            right: 18%;
+            z-index: 3;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+            animation: volarAbeja 4s ease-in-out infinite;
+        }
+
+        @keyframes volarAbeja {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(-25px, -15px) rotate(-10deg);
+            }
+            50% {
+                transform: translate(-45px, 10px) rotate(5deg);
+            }
+            75% {
+                transform: translate(-15px, 20px) rotate(-5deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
+
+        /* SECCIÓN 2: ÁLBUM SOBRE TIERRA */
+        .seccion-tierra {
+            background-image: url('tierra.jpg');
+            background-repeat: repeat;
+            background-size: 160px;
+            padding: 35px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .tarjeta-fecha {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.45);
+            padding: 18px 14px;
+            border-radius: 12px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .texto-narrativo {
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: #ffffff;
+            font-weight: 300;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
+            text-align: center;
+        }
+
+        .galeria-fotos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .rot-izq { transform: rotate(-3deg); }
+        .rot-der { transform: rotate(3deg); }
+
+        /* SECCIÓN 3: DEDICACIÓN (CORREGIDA CON FONDO DE TIERRA) */
+        .seccion-final {
+            background-image: url('tierra.jpg');
+            background-repeat: repeat;
+            background-size: 160px;
+            padding: 50px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            position: relative;
+        }
+
+        /* Capa oscura translúcida para garantizar legibilidad del texto sobre tierra */
+        .seccion-final::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 1;
+        }
+
+        .seccion-final * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .titulo-final {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.3rem;
+            color: #ffe600;
+            text-shadow: 2px 2px 8px rgba(0,0,0,1);
+        }
+
+        .texto-dedicatoria {
+            font-size: 0.98rem;
+            color: #ffffff;
+            line-height: 1.8;
+            font-weight: 300;
+            max-width: 95%;
+        }
+
+        .texto-dedicatoria p {
+            margin-bottom: 16px;
+        }
+
+        .polaroid-proximamente {
+            width: 200px;
+            height: 220px;
+            transform: rotate(-2deg);
+            margin-top: 15px;
+        }
+
+        .proximamente-placeholder {
+            width: 100%;
+            height: 160px;
+            background: #e5e5e5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #222;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 0 15px;
+        }
+
+        #visor-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
+            background: rgba(0, 0, 0, 0.96);
+            z-index: 200;
+            display: none;
             justify-content: center;
             align-items: center;
+            padding: 20px;
+        }
+
+        #visor-modal img, #visor-modal video {
+            max-width: 95%;
+            max-height: 85vh;
+            border-radius: 6px;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+            object-fit: contain;
+        }
+
+        .btn-cerrar-visor {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            color: #fff;
+            font-size: 2.5rem;
             cursor: pointer;
+            font-weight: bold;
+        }
+
+        #pantalla-inicio {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.82);
+            backdrop-filter: blur(10px);
+            z-index: 150;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .tarjeta-bienvenida h2 {
+            color: #ffffff;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .btn-inicio {
+            background: #ffd700;
+            color: #111;
+            border: none;
+            padding: 16px 36px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container" id="scroll-container">
+
+        <div id="pantalla-inicio">
+            <div class="tarjeta-bienvenida">
+                <h2>Tal vez no pueda entregarte flores de verdad ahora mismo, pero estas tienen algo especial: nunca se van a marchitar... Y aunque sean digitales, el cariño con el que te las doy es 100% real. ❤️</h2>
+                <button class="btn-inicio" onclick="iniciarExperiencia()">Ver mis flores 🌻</button>
+            </div>
+        </div>
+
+        <div class="reproductor-fijo" onclick="toggleMusica()" id="btnAudio">🎶</div>
+
+        <div class="seccion seccion-portada">
+            <div class="encabezado-portada">
+                <h1 class="titulo-portada">Flores Amarillas Para Ti 🌻</h1>
+                <p class="subtitulo-portada">De: Ulises | Para: Leslie</p>
+            </div>
+            
+            <div class="escena-flor">
+                <img src="abeja.png" class="abeja-volando" alt="Abeja Minecraft">
+                <img src="flor.png" class="flor-principal" alt="Flor Minecraft">
+            </div>
+        </div>
+
+        <div class="seccion seccion-tierra">
+            
+            <div class="tarjeta-fecha">
+                <div class="galeria-fotos">
+                    <div class="marco-polaroid rot-izq" onclick="abrirVisor('puertomadero.mp4', 'video')">
+                        <video src="puertomadero.mp4" autoplay muted loop playsinline></video>
+                        <span class="fecha-polaroid">19/09/2025</span>
+                    </div>
+                </div>
+                <div class="texto-narrativo">
+                    <p>Nos juntamos con tu hermanito y fuimos a Puerto Madero. Fue nuestra primera salida (si no contamos el viaje desde Bolivia donde nos conocimos). ❤️</p>
+                </div>
+            </div>
+
+            <div class="tarjeta-fecha">
+                <div class="texto-narrativo">
+                    <p>Ese día fuimos al Barrio Chino. Estabas re afónica y sonabas como una abuelita preciosa. Tenía miedo de no llegar a tiempo y encontrar todo cerrado, pero terminó siendo una salida inolvidable.</p>
+                </div>
+                <div class="galeria-fotos">
+                    <div class="marco-polaroid rot-izq" onclick="abrirVisor('barriochino1.jpg', 'img')">
+                        <img src="barriochino1.jpg" alt="Barrio Chino 1">
+                        <span class="fecha-polaroid">22/09/2025</span>
+                    </div>
+                    <div class="marco-polaroid rot-der" onclick="abrirVisor('barriochino2.jpg', 'img')">
+                        <img src="barriochino2.jpg" alt="Barrio Chino 2">
+                        <span class="fecha-polaroid">22/09/2025</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-fecha">
+                <div class="galeria-fotos">
+                    <div class="marco-polaroid rot-izq" onclick="abrirVisor('margal1.jpg', 'img')">
+                        <img src="margal1.jpg" alt="Margal 1">
+                        <span class="fecha-polaroid">29/09/2025</span>
+                    </div>
+                    <div class="marco-polaroid rot-der" onclick="abrirVisor('margal2.mp4', 'video')">
+                        <video src="margal2.mp4" autoplay muted loop playsinline></video>
+                        <span class="fecha-polaroid">29/09/2025</span>
+                    </div>
+                </div>
+                <div class="texto-narrativo">
+                    <p>Esa noche literalmente no dormí nada de los nervios pensando a dónde iríamos. Me acuerdo perfecto del momento en que te tomé de la muñeca y vos acomodaste tu mano para entrelazar los dedos, patinar bien agarrados y estar un poquito más cerca.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="seccion-final">
+            
+            <h2 class="titulo-final">Palabras que quiero dedicarte</h2>
+
+            <div class="texto-dedicatoria">
+                <p>Hoy quería darte algo especial, algo que te recordara lo importante que eres para mí.</p>
+                <p>Ya pasó un año desde que nos conocimos. Llegaste a mi vida como si nada, en ese viaje al que al principio no quería ir, pero hoy me alegra infinitamente haber ido porque te conocí a vos.</p>
+                <p>Salimos por primera vez sin saber todo lo que llegarías a significar para mí. Sos la primera chica con la que realmente quiero estar.</p>
+                <p>Sé que no soy el mejor en esto, con mi timidez y mis nervios, pero nunca me imaginé que alguien tan increíble como vos pudiera sentir maripositas por alguien como yo. ❤️</p>
+                <p>Te amo mucho &lt;3</p>
+            </div>
+
+            <div class="marco-polaroid polaroid-proximamente">
+                <div class="proximamente-placeholder">
+                    Próximamente foto de nosotros ❤️
+                </div>
+                <span class="fecha-polaroid">Pronto</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="visor-modal" onclick="cerrarVisor()">
+        <span class="btn-cerrar-visor">&times;</span>
+        <div id="contenido-visor"></div>
+    </div>
+
+    <audio id="musica" loop preload="auto">
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        function iniciarExperiencia() {
+            var audio = document.getElementById("musica");
+            var pantalla = document.getElementById("pantalla-inicio");
+            audio.play().then(() => {
+                pantalla.style.display = "none";
+            }).catch(error => {
+                pantalla.style.display = "none";
+            });
+        }
+
+        function toggleMusica() {
+            var audio = document.getElementById("musica");
+            var btn = document.getElementById("btnAudio");
+            if (audio.paused) {
+                audio.play();
+                btn.innerHTML = "🎶";
+            } else {
+                audio.pause();
+                btn.innerHTML = "🔇";
+            }
+        }
+
+        function abrirVisor(url, tipo) {
+            var modal = document.getElementById("visor-modal");
+            var contenedor = document.getElementById("contenido-visor");
+            contenedor.innerHTML = "";
+            if (tipo === 'img') {
+                contenedor.innerHTML = `<img src="${url}">`;
+            } else if (tipo === 'video') {
+                contenedor.innerHTML = `<video src="${url}" controls autoplay loop></video>`;
+            }
+            modal.style.display = "flex";
+        }
+
+        function cerrarVisor() {
+            var modal = document.getElementById("visor-modal");
+            var contenedor = document.getElementById("contenido-visor");
+            contenedor.innerHTML = "";
+            modal.style.display = "none";
+        }
+    </script>
+</body>
+</html>
             color: white;
             text-align: center;
             padding: 20px;
